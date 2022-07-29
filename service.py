@@ -10,7 +10,9 @@ def main():
     while not monitor.abortRequested():
         logWrite('monitoring for abortRequested')
         updateBookings()
-        if monitor.waitForAbort(3*60*60):
+        epgUpdateDelta = int(xbmcaddon.Addon('script.anezl.adrocorder').getSetting('epgUpdateDelta')) * 3600 - 900
+        logWrite(f'Waiting for {epgUpdateDelta} seconds ({epgUpdateDelta/3600} hours)')
+        if monitor.waitForAbort(epgUpdateDelta):
             break
 
 def updateBookings():
